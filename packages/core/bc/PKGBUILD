@@ -1,0 +1,20 @@
+# Maintainer: Jiren <jiren@gmail.com>
+pkgname=bc
+pkgver=6.7.5
+pkgrel=1
+pkgdesc="The Bc package contains an arbitrary precision numeric processing language."
+arch=('x86_64')
+url="https://git.gavinhoward.com/gavin/bc"
+license=('GPL')
+source=("https://github.com/gavinhoward/bc/releases/download/6.7.5/bc-6.7.5.tar.xz")
+sha256sums=('SKIP')  # Replace with the actual sha256sum of your source file
+
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    CC=gcc ./configure --prefix=/usr -G -O3 -r
+    make -j5
+    make DESTDIR=$pkgdir install
+}
+
+# vim:set ts=2 sw=2 et:
