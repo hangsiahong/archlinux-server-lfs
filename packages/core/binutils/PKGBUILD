@@ -1,0 +1,33 @@
+# Maintainer: Jiren <jiren@gmail.com>
+pkgname=binutils
+pkgver=2.42
+pkgrel=1
+pkgdesc="The Binutils package contains a linker, an assembler, and other tools for handling object files."
+arch=('x86_64')
+url="https://www.gnu.org/software/binutils/"
+license=('GPL')
+source=("https://sourceware.org/pub/binutils/releases/binutils-2.42.tar.xz")
+sha256sums=('SKIP')  # Replace with the actual sha256sum of your source file
+
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    mkdir build
+    cd build
+    ../configure --prefix=/usr       \
+             --sysconfdir=/etc   \
+             --enable-gold       \
+             --enable-ld=default \
+             --enable-plugins    \
+             --enable-shared     \
+             --disable-werror    \
+             --enable-64-bit-bfd \
+             --with-system-zlib  \
+             --enable-default-hash-style=gnu
+    make tooldir=/usr -j5
+
+    make tooldir=/usr DESTDIR=$pkgdir install
+    rm -fv $pkgdir/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a
+}
+
+# vim:set ts=2 sw=2 et:
