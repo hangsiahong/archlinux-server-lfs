@@ -1,0 +1,24 @@
+# Maintainer: Jiren <jiren@gmail.com>
+pkgname=pkgconf
+pkgver=2.1.1
+pkgrel=1
+pkgdesc="The pkgconf package is a successor to pkg-config and contains a tool for passing the include path and/or library paths to build tools during the configure and make phases of package installations."
+arch=('x86_64')
+url="http://pkgconf.org/"
+license=('GPL')
+source=("https://distfiles.ariadne.space/pkgconf/pkgconf-2.1.1.tar.xz")
+sha256sums=('SKIP')  # Replace with the actual sha256sum of your source file
+
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    ./configure --prefix=/usr              \
+            --disable-static
+    make -j5
+
+    make DESTDIR=$pkgdir install
+    ln -sv pkgconf   $pkgdir/usr/bin/pkg-config
+    ln -sv pkgconf.1 $pkgdir/usr/share/man/man1/pkg-config.1
+}
+
+# vim:set ts=2 sw=2 et:

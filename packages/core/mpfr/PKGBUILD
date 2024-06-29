@@ -1,0 +1,39 @@
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Maintainer: JIREN
+# Contributor: Eric Bélanger <eric@archlinux.org>
+
+pkgname=mpfr
+pkgver=4.2.1
+pkgrel=4
+pkgdesc='The MPFR package contains functions for multiple precision math.'
+arch=(x86_64)
+url='https://www.mpfr.org/'
+source=("https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.1.tar.xz")
+sha256sums=('SKIP')  # Replace with the actual sha256sum of your source file
+
+build() {
+    cd "$srcdir/$pkgname-$pkgver"
+    ./configure --prefix=/usr \
+                --disable-static \
+                --enable-thread-safe \
+                --docdir=/usr/share/doc/mpfr-4.2.1
+    make -j5
+}
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    make DESTDIR="$pkgdir" install
+
+    # Fix permissions issue by copying documentation to the packaging directory
+    install -dm755 "$pkgdir/usr/share/doc/$pkgname-$pkgver"
+    cp -a doc/* "$pkgdir/usr/share/doc/$pkgname-$pkgver/"
+
+    # Install info files to the packaging directory
+    install -dm755 "$pkgdir/usr/share/info"
+    install -m644 doc/mpfr.info "$pkgdir/usr/share/info/mpfr.info"
+
+    # Handle the `install-info` database
+    install-info --dir-file="$pkgdir/usr/share/info/dir" "$pkgdir/usr/share/info/mpfr.info"
+}
+
+# vim:set ts=2 sw=2 et:

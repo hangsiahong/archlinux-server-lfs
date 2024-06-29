@@ -1,0 +1,19 @@
+# Maintainer: Jiren <jiren@gmail.com>
+pkgname=iana-etc
+pkgver=20240125
+pkgrel=1
+pkgdesc="The Iana-Etc package provides data for network services and protocols."
+arch=('x86_64')
+url="https://www.iana.org/protocols"
+license=('GPL')
+source=("https://github.com/Mic92/iana-etc/releases/download/20240125/iana-etc-20240125.tar.gz")
+sha256sums=('SKIP')  # Replace with the actual sha256sum of your source file
+
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    mkdir -pv $pkgdir/etc
+    cp services protocols $pkgdir/etc
+}
+
+# vim:set ts=2 sw=2 et:

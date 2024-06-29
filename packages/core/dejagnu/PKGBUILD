@@ -1,0 +1,22 @@
+# Maintainer: Jiren <jiren@gmail.com>
+pkgname=dejagnu
+pkgver=1.6.3
+pkgrel=1
+pkgdesc="The DejaGnu package contains a framework for running test suites on GNU tools. It is written in expect, which itself uses Tcl (Tool Command Language)."
+arch=('x86_64')
+url="https://www.gnu.org/software/dejagnu/"
+license=('GPL')
+source=("https://ftp.gnu.org/gnu/dejagnu/dejagnu-1.6.3.tar.gz")
+sha256sums=('SKIP')  # Replace with the actual sha256sum of your source file
+
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    mkdir -v build
+    cd       build
+    ../configure --prefix=/usr
+
+    make DESTDIR=$pkgdir install
+}
+
+# vim:set ts=2 sw=2 et:

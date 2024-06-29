@@ -1,0 +1,25 @@
+# Maintainer: Jiren <jiren@gmail.com>
+pkgname=flex
+pkgver=2.6.4
+pkgrel=1
+pkgdesc="The Flex package contains a utility for generating programs that recognize patterns in text."
+arch=('x86_64')
+license=('GPL')
+url="https://github.com/westes/flex"
+source=("https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz")
+sha256sums=('SKIP')  # Replace with the actual sha256sum of your source file
+
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    ./configure --prefix=/usr \
+            --disable-static
+    make  -j5
+    make prefix=$pkgdir/usr install
+
+    ln -sv flex $pkgdir/usr/bin/lex
+
+
+}
+
+# vim:set ts=2 sw=2 et:

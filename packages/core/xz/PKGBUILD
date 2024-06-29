@@ -1,0 +1,22 @@
+# Maintainer: Jiren <jiren@gmail.com>
+pkgname=xz
+pkgver=5.4.6
+pkgrel=1
+pkgdesc="The Xz package contains programs for compressing and decompressing files. It provides capabilities for the lzma and the newer xz compression formats. Compressing text files with xz yields a better compression percentage than with the traditional gzip or bzip2 commands."
+arch=('x86_64')
+url="https://tukaani.org/xz"
+license=('GPL')
+source=("https://github.com/tukaani-project/xz/releases/download/v5.4.6/xz-5.4.6.tar.xz")
+sha256sums=('SKIP')  # Replace with the actual sha256sum of your source file
+
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    ./configure --prefix=/usr    \
+            --disable-static \
+            --docdir=/usr/share/doc/xz-5.4.6
+    make -j5
+    make DESTDIR=$pkgdir install
+}
+
+# vim:set ts=2 sw=2 et:

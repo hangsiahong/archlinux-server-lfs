@@ -1,0 +1,22 @@
+# Maintainer: Jiren <jiren@gmail.com>
+pkgname=zstd
+pkgver=1.5.5
+pkgrel=1
+pkgdesc="Zstandard is a real-time compression algorithm, providing high compression ratios. It offers a very wide range of compression / speed trade-offs, while being backed by a very fast decoder."
+arch=('x86_64')
+license=('GPL')
+url="https://facebook.github.io/zstd/"
+source=("https://github.com/facebook/zstd/releases/download/v1.5.5/zstd-1.5.5.tar.gz")
+sha256sums=('SKIP')  # Replace with the actual sha256sum of your source file
+
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    make prefix=/usr
+    make prefix=$pkgdir/usr install
+
+    rm -v $pkgdir/usr/lib/libzstd.a
+
+}
+
+# vim:set ts=2 sw=2 et:

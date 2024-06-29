@@ -1,0 +1,23 @@
+# Maintainer: Jiren <jiren@gmail.com>
+pkgname=gmp
+pkgver=6.3.0
+pkgrel=1
+pkgdesc="The GMP package contains math libraries. These have useful functions for arbitrary precision arithmetic."
+arch=('x86_64')
+url="https://www.gnu.org/software/gmp/"
+license=('GPL')
+source=("https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz")
+sha256sums=('SKIP')  # Replace with the actual sha256sum of your source file
+
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    ./configure --prefix=/usr    \
+            --enable-cxx     \
+            --disable-static \
+
+    make -j5
+    make DESTDIR=$pkgdir install
+}
+
+# vim:set ts=2 sw=2 et:
